@@ -1,0 +1,83 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sanio Portal</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Sanio Enterprise", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Links", "Links", "Home")</li>
+
+                    @if (Session["AccountID"] != null)
+                    {
+                        if (Convert.ToInt32(Session["RoleID"]) == 0)
+                        {
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    Portal Management
+                                    <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>@Html.ActionLink("Users Management", "Users_Management", "Home")</li>
+                                    <li>@Html.ActionLink("Links Management", "Links_Management", "Home")</li>
+                                    <li>@Html.ActionLink("Roles Management", "Roles_Management", "Home")</li>
+                                </ul>
+                            </li>
+
+                        }
+                        if (Convert.ToInt32(Session["RoleID"]) == 0 || Convert.ToInt32(Session["RoleID"]) == 1)
+                        {
+                            <li>@Html.ActionLink("Process Request", "Process_Request", "Home")</li>
+                        }
+                        if (Convert.ToInt32(Session["RoleID"]) == 0 || Convert.ToInt32(Session["RoleID"]) == 2)
+                        {
+                            <li>@Html.ActionLink("Make Request", "Make_Request", "Home")</li>
+                        }
+
+                    }
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    @if (Session["AccountID"] == null)
+                    {
+                        <li>@Html.ActionLink("Register", "Register", "Home")</li>
+                        <li>@Html.ActionLink("Login", "Login", "Home")</li>
+
+                    }
+                    @if (Session["AccountID"] != null)
+                    {
+                        <li>@Html.ActionLink("Welcome to Sanio, "+Session["Name"].ToString().ToUpper()+"!", "EditProfile", "Home")</li>
+                        <li><a href="@Url.Action("LogOut","Login")">Log Out</a></li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container body-content">
+        @RenderBody()
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

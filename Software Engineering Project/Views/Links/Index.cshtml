@@ -1,0 +1,36 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+ }
+@using Software_Engineering_Project.Models;
+@model IEnumerable<Link>
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <div>
+        <table class="table">
+            <tr>
+                <th>
+                    Links
+                </th>
+            </tr>
+
+            @foreach (var link in Model)
+            {
+                <tr>
+                    <td>
+                        <a href="http://@(link.URL)">@(link.URL)</a>
+
+                    </td>
+                </tr>
+            }
+        </table>
+
+    </div>
+</body>
+</html>
